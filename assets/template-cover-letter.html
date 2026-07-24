@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{PAGE_TITLE}}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #fdfbf7;
+            color: #4a4a4a;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: #fdfbf7;
+            padding: 20mm 25mm !important;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 12mm;
+            position: relative;
+        }
+
+        .header-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42pt;
+            font-weight: 400;
+            color: #6d665e;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 2mm;
+            line-height: 1;
+        }
+
+        .header-name {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 11pt;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 5mm;
+        }
+
+        .header-line {
+            width: 100%;
+            height: 2px;
+            background-color: #8c8279;
+            margin-top: 8mm;
+            margin-bottom: 10mm;
+            opacity: 0.6;
+        }
+
+        .content {
+            font-size: 10pt;
+            color: #333;
+            max-width: 100%;
+        }
+
+        .meta-info {
+            margin-bottom: 8mm;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .greeting {
+            margin-bottom: 4mm;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 3.5mm;
+            text-align: justify;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 12pt;
+            color: #6d665e;
+            margin-top: 5mm;
+            margin-bottom: 2mm;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        strong {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .signature-section {
+            margin-top: 10mm;
+        }
+
+        .signature-image {
+            font-family: 'Playfair Display', cursive;
+            font-size: 24pt;
+            color: #333;
+            margin: 2mm 0;
+            font-style: italic;
+        }
+
+        .signature-print {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 10pt;
+            color: #555;
+            letter-spacing: 1px;
+        }
+
+        .contact-line {
+            margin-top: 2mm;
+            font-size: 9pt;
+            color: #666;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                size: A4;
+            }
+
+            body {
+                background: #fdfbf7 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page-container {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-container">
+
+        <header class="header">
+            <h1 class="header-title">{{COVER_LETTER_TITLE}}</h1>
+            <div class="header-name">{{HEADER_NAME}}</div>
+            <div class="header-line"></div>
+        </header>
+
+        <div class="content">
+            <div class="meta-info">
+                {{DATE}}<br>
+                <br>
+                <strong>{{APPLICATION_LABEL}}</strong> {{JOB_TITLE}}<br>
+                <strong>{{TO_LABEL}}</strong> {{HIRING_TEAM}}
+            </div>
+
+            <div class="greeting">{{GREETING}}</div>
+
+            <!-- BODY_START -->
+            {{BODY}}
+            <!-- BODY_END -->
+
+            <div class="signature-section">
+                <p>{{SIGN_OFF}}</p>
+                <div class="signature-image">{{SIGNATURE_CURSIVE}}</div>
+                <div class="signature-print">{{SIGNATURE_PRINT}}</div>
+                <div class="contact-line">{{CONTACT_LINE}}</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
