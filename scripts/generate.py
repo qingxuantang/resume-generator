@@ -21,6 +21,43 @@ PHOTO_BASE64_PATH = SKILL_DIR / "assets" / "photo-base64.txt"
 WORK_HISTORY_PATH = SKILL_DIR / "references" / "work-history.md"
 
 
+# ── Abbreviation expansion map ────────────────────────────────────────────────
+# Applied to ALL string fields in config before rendering.
+# Keys are matched as whole words (case-sensitive).
+# Safety net only — the LLM should still write full forms in the config.
+ABBR_MAP = {
+    "comms": "communications",
+    "Comms": "Communications",
+    "XHS": "Xiaohongshu",
+    "xhs": "Xiaohongshu",
+    "dept.": "department",
+    "Dept.": "Department",
+    "mgmt": "management",
+    "Mgmt": "Management",
+    "coord.": "coordination",
+    "Coord.": "Coordination",
+    "collab.": "collaboration",
+    "Collab.": "Collaboration",
+    "comms.": "communications",
+    "PR Comms": "PR Communications",
+}
+
+
+def expand_abbreviations(obj):
+    """Recursively expand abbreviations in all string fields of a config object."""
+    if isinstance(obj, str):
+        result = obj
+        for abbr, full in ABBR_MAP.items():
+            # Match whole word only (handles punctuation boundaries too)
+            result = re.sub(r'(?<![A-Za-z])' + re.escape(abbr) + r'(?![A-Za-z])', full, result)
+        return result
+    elif isinstance(obj, list):
+        return [expand_abbreviations(item) for item in obj]
+    elif isinstance(obj, dict):
+        return {k: expand_abbreviations(v) for k, v in obj.items()}
+    return obj
+
+
 # ── Work history loader ─────────────────────────────────────────────────────
 
 def _parse_yaml_frontmatter(text):
@@ -356,6 +393,10 @@ def generate_resume(config_path, template_path, output_path):
     # Load config
     with open(config_path, "r", encoding="utf-8") as f:
         config = json.load(f)
+
+    # Expand abbreviations across all string fields (safety net; LLM should
+    # still write full forms — see SKILL.md Anti-Patterns)
+    config = expand_abbreviations(config)
 
     # Load work history for personal info
     wh = load_work_history()

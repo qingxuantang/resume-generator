@@ -191,8 +191,8 @@ The LLM must still include `company`, `period`, and `role` in the experience con
 | `title_lines` | 3 | **must be real job titles from work-history.md** (e.g. Role or Role_EN values), NOT skill descriptions or inferred titles |
 | `about_text` | 100-150 chars | Tailored per JD, referencing work-history.md; only reframe existing facts, never fabricate. **Must include at least 2 concrete metrics from experience** (e.g. "170+ videos", "8+ platforms"), otherwise validate.py will block output. Write towards 150 chars for page fullness. |
 | `skills` | 7 | Pick the 7 most relevant from work-history.md skill pool |
-| `experience` | all locked | **All locked_companies must appear.** validate.py will FAIL if any is missing. Role must be real title from work-history.md. Bullets support `**Label**: text` syntax. Content tailored per JD angle, facts must not be fabricated. **Each experience entry should have 3-5 bullets** — don't write only 1-2 bullets per entry. Keep content comprehensive, minimize trimming. |
-| `core_competencies` | 6 | Each with title + desc. **desc should be 15-25 characters (CN) or 8-15 words (EN)** — don't write overly short descriptions. If overflow after generation, reduce to 4. |
+| `experience` | all locked | **All locked_companies must appear.** validate.py will FAIL if any is missing. Role must be real title from work-history.md. Bullets support `**Label**: text` syntax. Content tailored per JD angle, facts must not be fabricated. **Each experience entry should have 3-5 bullets** — don't write only 1-2 bullets per entry. Keep content comprehensive, minimize trimming. **Bullet order:** lead with capability/meta bullets (workflow design, core methods), then project bullets ordered by complexity/maturity (most complex first). Follow the order in work-history.md. |
+| `core_competencies` | 6 | Each with title + desc. **desc should be 15-25 characters (CN) or 8-15 words (EN)** — don't write overly short descriptions. If overflow after generation, reduce to 4 (**keep the language/communication competency item if present**). |
 | `highlight_keywords` | optional | Replace highlighted keywords to match JD language |
 | `sidebar_section_title` | CN: "基本信息" | EN: "BASIC INFO" (hardcoded in template) |
 
@@ -313,20 +313,20 @@ Shared template: `assets/template-cover-letter.html` (language switched via `lan
 2. **No inferred titles**: Don't use titles never actually held
 3. **No content overflow**: If content too long, trim rather than exceeding page
 4. **No sparse pages**: Don't write minimal content — page should be well-filled with no large blank areas at bottom
-5. **No orphan words**: All text must avoid single-word last lines
-6. **No abbreviations in config**: Use full forms (communications, department, management)
+5. **No orphan words**: All text must avoid single-word last lines. Skills items are especially prone — keep each under 12 chars, using short forms where needed (e.g. FB/Twitter)
+6. **No abbreviations in config**: Use full forms (communications, department, management). generate.py does fallback expansion but LLM should write full forms.
 
 ## English Bullet Writing Style
 
 **DO**
-- Keep sentences short and direct
-- One core point per bullet
+- Keep sentences short and direct, read like a real person wrote them
+- One core point per bullet, don't cram two things into one sentence
 - Weave numbers and results naturally into sentences
 - Distribute info across bullets logically
 
 **DON'T**
 - Don't overuse em dashes to split long sentences
-- Don't pile on modifiers
-- Don't cram all info into one bullet
-- Don't use overly formal/stiff structures
-- Don't use informal abbreviations: comms -> communications, dept. -> department
+- Don't pile on modifiers (`end-to-end`, `full ownership`, `sustained`)
+- Don't cram all info into one bullet — split when needed
+- Don't use overly formal/stiff structures — avoid "AI tone"
+- Don't use informal abbreviations: comms -> communications, dept. -> department, mgmt -> management
